@@ -1,13 +1,6 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 
-; ========================================
-; 블로그 자동 타이핑 스크립트
-; F2: 자연스러운 타이핑 (150ms)
-; F3: 느린 타이핑 (300ms)
-; ESC: 즉시 중단
-; ========================================
-
 global TypingActive := false
 
 F2:: {
@@ -22,7 +15,7 @@ ESC:: {
     global TypingActive
     if (TypingActive) {
         TypingActive := false
-        ToolTip("⛔ 타이핑 중단됨")
+        ToolTip("타이핑 중단됨")
         SetTimer(() => ToolTip(), -1500)
     }
 }
@@ -37,7 +30,7 @@ TypeClipboard(delay) {
     
     text := A_Clipboard
     if (text = "") {
-        ToolTip("⚠️ 클립보드가 비어있습니다")
+        ToolTip("클립보드가 비어있습니다")
         SetTimer(() => ToolTip(), -2000)
         return
     }
@@ -45,7 +38,7 @@ TypeClipboard(delay) {
     TypingActive := true
     totalChars := StrLen(text)
     
-    ToolTip("⌨️ 타이핑 시작... (ESC로 중단)")
+    ToolTip("타이핑 시작... (ESC로 중단)")
     
     Loop Parse, text {
         if (!TypingActive) {
@@ -64,7 +57,7 @@ TypeClipboard(delay) {
         
         progress := Round((A_Index / totalChars) * 100)
         if (Mod(A_Index, 20) = 0) {
-            ToolTip("⌨️ 타이핑 중... " progress "% (ESC로 중단)")
+            ToolTip("타이핑 중... " progress "% (ESC로 중단)")
         }
         
         randomDelay := delay + Random(-delay * 0.3, delay * 0.3)
@@ -74,7 +67,7 @@ TypeClipboard(delay) {
     TypingActive := false
     
     if (A_Index >= totalChars) {
-        ToolTip("✅ 타이핑 완료!")
+        ToolTip("타이핑 완료!")
     }
     SetTimer(() => ToolTip(), -2000)
 }
